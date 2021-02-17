@@ -6,26 +6,34 @@ Vue.use(Router);
 export default new Router({
     mode: "history",
     routes: [
+        // categories
         {
             path: "/",
             alias: "/categories",
             name: "categoriesList",
-            component: () => import("./components/CategoriesList")
+            component: () => import("./components/categories/CategoriesList")
         },
         {
             path: "/categories/view",
             name: "categoryView",
-            component: () => import("./components/CategoryView")
+            component: () => import("./components/categories/CategoryView")
         },
         {
             path: "/categories/edit",
             name: "categoryEdit",
-            component: () => import("./components/EditCategory")
+            component: () => import("./components/categories/EditCategory")
         },
         {
             path: "/add",
             name: "addCategory",
-            component: () => import("./components/AddCategory")
-        }
+            component: () => import("./components/categories/AddCategory")
+        },
+        // locations
+        {
+            path: "/locations",
+            name: "locationsList",
+            component: () => import("./components/locations/LocationsList")
+        },
+
     ]
 });

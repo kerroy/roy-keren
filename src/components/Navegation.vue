@@ -21,6 +21,11 @@
 <script>
 export default {
   name: "app-nav",
+  data() {
+    return {
+
+    };
+  },
   methods: {
     deleteCategory() {
       this.$store.commit('removeCategory');

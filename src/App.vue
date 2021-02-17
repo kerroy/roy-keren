@@ -5,16 +5,20 @@
     <div class="container mt-3">
       <router-view />
     </div>
+
+    <bottom-nav />
   </div>
 </template>
 
 <script>
 import mainNav from './components/Navegation';
+import BottomNav from './components/BottomNav';
 
 export default {
   name: 'App',
   components: {
-    mainNav
+    mainNav,
+    BottomNav
   }
 }
 </script>

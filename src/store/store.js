@@ -9,8 +9,12 @@ Vue.use(Vuex);
 // Create store
 export default new Vuex.Store({
     state: {
+        viewing: "categories",
         categories: [],
-        selectedCategory: -1
+        selectedCategory: -1,
+        locations: [
+            {title: "haifa", address: "sex drive 69", coordinates: "10.00 x 11.11", category: "1"}
+        ], //title, address, coordinates, category/ies
     },
     mutations: {
         addCategory(state, categoryTitle) {
