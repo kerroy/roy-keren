@@ -8,8 +8,9 @@ export default new Router({
     routes: [
         // categories
         {
-            path: "/",
-            alias: "/categories",
+            // path: "/",
+            path: "/categories",
+            alias: "/",
             name: "categoriesList",
             component: () => import("./components/categories/CategoriesList")
         },
@@ -24,7 +25,7 @@ export default new Router({
             component: () => import("./components/categories/EditCategory")
         },
         {
-            path: "/add",
+            path: "/categories/add",
             name: "addCategory",
             component: () => import("./components/categories/AddCategory")
         },
@@ -34,6 +35,20 @@ export default new Router({
             name: "locationsList",
             component: () => import("./components/locations/LocationsList")
         },
-
+        {
+            path: "/locations/add",
+            name: "addLocation",
+            component: () => import("./components/locations/AddLocation")
+        },
+        {
+            path: "/locations/view",
+            name: "locationView",
+            component: () => import("./components/locations/LocationView")
+        },
+        {
+            path: "/locations/edit",
+            name: "locationEdit",
+            component: () => import("./components/locations/EditLocation")
+        },
     ]
 });

@@ -1,7 +1,7 @@
 <template>
   <div id="add-location">
-    <h1>Add New Location</h1>
-
+    <h1>Edit Location</h1>
+{{ this.$store.state.selectedLocation }}
     <form>
       <div class="form-group" :class="{invalid: titleValidate==='invalid'}">
         <label for="title">Title</label>
@@ -21,23 +21,32 @@
         </p>
       </div>
 
-      <div class="form-group" :class="{invalid: coordinatesValidate==='invalid'}">
-        <label for="coordinates">Co-ordinates</label>
-        <input type="text" class="form-control" id="coordinates"
-               :class="coordinatesValidate==='invalid'?'invalid-input':''" v-model.trim="coordinates" @blur="validateCoordinatesInput" />
-        <p v-if="coordinatesValidate==='invalid'"  :class="coordinatesValidate==='invalid'?'invalid-text':''">
-          Please enter a valid Co-ordinates
+      <div class="form-group" :class="{invalid: latValidate==='invalid'||lngValidate==='invalid'}">
+        <label for="lat">Co-ordinates</label>
+        <input type="text" class="form-control" id="lat"
+               :class="latValidate==='invalid'?'invalid-input':''" v-model="lat" @blur="validateLatInput" />
+        <p v-if="latValidate==='invalid'"  :class="latValidate==='invalid'?'invalid-text':''">
+          Please enter a valid Latitude
+        </p>
+        <input type="text" class="form-control" id="lng"
+               :class="lngValidate==='invalid'?'invalid-input':''" v-model="lng" @blur="validateLngInput" />
+        <p v-if="lngValidate==='invalid'"  :class="lngValidate==='invalid'?'invalid-text':''">
+          Please enter a valid longitude
         </p>
       </div>
 
-      <div class="form-group" :class="{invalid: categoryValidate==='invalid'}">
-        <label for="category">Category</label>
-        <input type="text" class="form-control" id="category"
-               :class="categoryValidate==='invalid'?'invalid-input':''" v-model.trim="category" @blur="validateCategoryInput" />
-        <p v-if="categoryValidate==='invalid'" :class="categoryValidate==='invalid'?'invalid-text':''">
-          Please enter a valid Category
-        </p>
+      <div class="form-group form-check" v-for="item in categoryList" v-bind:key="item" aria-required="true">
+        <input type="checkbox"  v-model="categoriesSelected" :id="item" :value="item">&nbsp;
+        <label :for="item">{{ item }}</label>
       </div>
+<!--      <div class="form-group" :class="{invalid: categoryValidate==='invalid'}">-->
+<!--        <label for="category">Category</label>-->
+<!--        <input type="text" class="form-control" id="category"-->
+<!--               :class="categoryValidate==='invalid'?'invalid-input':''" v-model.trim="category" @blur="validateCategoryInput" />-->
+<!--        <p v-if="categoryValidate==='invalid'" :class="categoryValidate==='invalid'?'invalid-text':''">-->
+<!--          Please enter a valid Category-->
+<!--        </p>-->
+<!--      </div>-->
     </form>
 
     <button type="submit" class="badge badge-primary" @click="submitForm">
@@ -48,28 +57,30 @@
 
 <script>
 export default {
-  name: "addLocation",
+  name: "editLocation",
   data() {
     return {
-      title: '',
+      title: this.$store.state.locations[this.$store.state.selectedLocation].title,
       titleValidate: '',
-      address: '',
+      address: this.$store.state.locations[this.$store.state.selectedLocation].address,
       addressValidate: '',
-      coordinates: '',
-      coordinatesValidate: '',
-      category: '',
+      lat: this.$store.state.locations[this.$store.state.selectedLocation].lat,
+      latValidate: '',
+      lng: this.$store.state.locations[this.$store.state.selectedLocation].lng,
+      lngValidate: '',
+      categoriesSelected: this.$store.state.locations[this.$store.state.selectedLocation].categoriesSelected,
       categoryValidate: '',
+      categoryList: this.$store.state.categories,
       message: ''
     };
   },
   methods: {
     submitForm() {
-      let newData = {title: this.title, address: this.address, coordinates: this.coordinates, category: this.category};
-      this.$store.commit('addLocation', newData);
+      let newData = {title: this.title, address: this.address, lat: this.lat, lng: this.lng, categoriesSelected: this.categoriesSelected};
+      this.$store.commit('editLocation', newData);
       this.title = '';
       this.address = '';
       this.coordinates = '';
-      this.category = '';
     },
     validateTitleInput() {
       if (this.title.length < 2) {
@@ -85,11 +96,18 @@ export default {
         this.addressValidate = 'valid';
       }
     },
-    validateCoordinatesInput() {
-      if (this.coordinates.length < 5) {
-        this.coordinatesValidate = 'invalid';
+    validateLatInput() {
+      if (!this.lat) {
+        this.latValidate = 'invalid';
       } else {
-        this.coordinatesValidate = 'valid';
+        this.latValidate = 'valid';
+      }
+    },
+    validateLngInput() {
+      if (!this.lng) {
+        this.lngValidate = 'invalid';
+      } else {
+        this.lngValidate = 'valid';
       }
     },
     validateCategoryInput() {

@@ -5,8 +5,12 @@
     <form>
       <div class="form-group" :class="{invalid: categoryTitleValidate==='invalid'}">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" v-model.trim="categoryTitle" @blur="validateInput" />
-        <p v-if="categoryTitleValidate==='invalid'">Please enter a valid title</p>
+        <input type="text" class="form-control" id="title"
+               :class="categoryTitleValidate==='invalid'?'invalid-input':''"
+               v-model.trim="categoryTitle" @blur="validateInput" />
+        <p v-if="categoryTitleValidate==='invalid'" :class="categoryTitleValidate==='invalid'?'invalid-text':''">
+          Please enter a valid title
+        </p>
       </div>
     </form>
 
@@ -28,9 +32,12 @@ export default {
   },
   methods: {
     submitForm() {
-      // console.log("add: "+this.categoryTitle);
-      this.$store.commit('addCategory', this.categoryTitle);
-      this.categoryTitle = '';
+      this.validateInput();
+
+      if (this.categoryTitleValidate=='valid') {
+        this.$store.commit('addCategory', this.categoryTitle);
+        this.categoryTitle = '';
+      }
     },
     validateInput() {
       if (this.categoryTitle.length<2) {
@@ -50,7 +57,10 @@ export default {
   margin: auto;
 }
 
-.form-control.invalid input {
+.invalid-input {
   border-color: red;
+}
+.invalid-text {
+  color: red;
 }
 </style>
