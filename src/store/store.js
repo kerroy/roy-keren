@@ -9,14 +9,16 @@ Vue.use(Vuex);
 // Create store
 export default new Vuex.Store({
     state: {
-        categories: [ { "title": "cat1" }, { "title": "cat2" }, { "title": "cat3" }, { "title": "cat4" } ],
+        categories: [],
+        // categories: [ { "title": "cat1" }, { "title": "cat2" }, { "title": "cat3" }, { "title": "cat4" } ], // for dev/debug only
         selectedCategory: -1,
         selectedLocation: -1,
-        locations: [
-            { "title": "loc1", "address": "nowhere", "lat": "35.0928019", "lng": "32.1626831", "categoriesSelected": [ "cat1" ] },
-            { "title": "loc2", "address": "haifa", "lat": "32.7996175", "lng": "34.9817565", "categoriesSelected": [ "cat2" ] },
-            { "title": "loc3", "address": "hell", "lat": "32.8417933", "lng": "35.0644239", "categoriesSelected": [ "cat1" ] }
-        ]
+        locations: []
+        // locations: [
+        //     { "title": "loc1", "address": "nowhere", "lat": "35.0928019", "lng": "32.1626831", "categoriesSelected": [ "cat1" ] },
+        //     { "title": "loc2", "address": "haifa", "lat": "32.7996175", "lng": "34.9817565", "categoriesSelected": [ "cat2" ] },
+        //     { "title": "loc3", "address": "hell", "lat": "32.8417933", "lng": "35.0644239", "categoriesSelected": [ "cat1" ] }
+        // ] // for dev/debug only
 },
     mutations: {
         // category
