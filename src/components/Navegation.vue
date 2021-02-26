@@ -1,13 +1,13 @@
 <template>
   <div>
-    <nav id="app-nav" class="navbar navbar-expand navbar-dark bg-dark" v-if="this.$route.path.includes('categories')">
+    <nav id="app-nav" class="navbar navbar-expand navbar-dark bg-dark" v-if="this.$route.path.includes('categories')||this.$route.path=='/'">
       <router-link to="/categories" class="navbar-brand">Categories</router-link>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link to="/categories/add" class="nav-link">Add</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="categories//view" class="nav-link" :class="setClassDisabled()">View</router-link>
+          <router-link to="categories/view" class="nav-link" :class="setClassDisabled()">View</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/categories/edit" class="nav-link" :class="setClassDisabled()">Edit</router-link>

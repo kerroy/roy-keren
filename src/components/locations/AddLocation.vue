@@ -35,8 +35,8 @@
 
       <div>
         <div class="form-group form-check" v-for="item in categoryList" v-bind:key="item" :required="true">
-          <input type="checkbox"  v-model="categoriesSelected" :id="item" :value="item">&nbsp;
-          <label :for="item">{{item}}</label>
+          <input type="checkbox"  v-model="categoriesSelected" :id="item.title" :value="item.title">&nbsp;
+          <label :for="item.title">{{item.title}}</label>
         </div>
         <p v-if="categoryValidate==='invalid'"  :class="categoryValidate==='invalid'?'invalid-text':''">
           Must select at least 1 category
@@ -84,7 +84,8 @@ export default {
         this.$store.commit('addLocation', newData);
         this.title = '';
         this.address = '';
-        this.coordinates = '';
+        this.lat = '';
+        this.lng = '';
         this.category = '';
       }
     },

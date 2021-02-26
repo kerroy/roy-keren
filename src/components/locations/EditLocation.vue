@@ -1,7 +1,6 @@
 <template>
   <div id="add-location">
     <h1>Edit Location</h1>
-{{ this.$store.state.selectedLocation }}
     <form>
       <div class="form-group" :class="{invalid: titleValidate==='invalid'}">
         <label for="title">Title</label>
@@ -36,8 +35,8 @@
       </div>
 
       <div class="form-group form-check" v-for="item in categoryList" v-bind:key="item" aria-required="true">
-        <input type="checkbox"  v-model="categoriesSelected" :id="item" :value="item">&nbsp;
-        <label :for="item">{{ item }}</label>
+        <input type="checkbox"  v-model="categoriesSelected" :id="item.title" :value="item.title">&nbsp;
+        <label :for="item">{{ item.title }}</label>
       </div>
 <!--      <div class="form-group" :class="{invalid: categoryValidate==='invalid'}">-->
 <!--        <label for="category">Category</label>-->

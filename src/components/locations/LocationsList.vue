@@ -10,19 +10,23 @@
       <div class="mr-4">
         <label for="groupBy" class="mr-1">Group by:</label>
         <select id="groupBy" v-model="groupByCategory" @change="groupByCat">
-          <option v-for="item in categories" v-bind:key="item" :value="item">{{ item }}</option>
+          <option v-for="item in categories" v-bind:key="item.title" :value="item.title">{{ item.title }}</option>
+        </select>
+      </div>
+
+      <div class="mr-4">
+        <label for="filterBy" class="mr-1">Filter By:</label>
+        <select id="filterBy" v-model="filterByCategory" @change="filterByCat">
+          <option v-for="item in categories" v-bind:key="item.title" :value="item.title">{{ item.title }}</option>
         </select>
       </div>
 
       <div>
-        <label for="filterBy" class="mr-1">Filter By:</label>
-        <select id="filterBy" v-model="filterByCategory" @change="filterByCat">
-          <option v-for="item in categories" v-bind:key="item" :value="item">{{ item }}</option>
-        </select>
+        <button @click.prevent="resetLocations">Reset</button>
       </div>
     </div>
 
-    <div v-if="!$store.state.locations.length">No Locations found.</div>
+    <div v-if="!locationsList.length">No Locations found.</div>
     <div e-else class="list-group">
       <ul>
         <li class="list-group-item"
@@ -37,8 +41,8 @@
             <label>Co-ordinates:</label><p>{{ location.lat }} x {{ location.lng }}</p>
             <label>Category:</label>
             <div>
-              <p v-for="item in location.category" :key="item">
-                {{ item }}
+              <p v-for="catName in location.categoriesSelected" :key="catName">
+                {{ catName }}
               </p>
             </div>
           </div>
@@ -76,8 +80,13 @@ export default {
     sortLocations() {
       this.locationsList.sort((a, b) => (a.title > b.title) ? 1 : -1);
     },
+    resetLocations() {
+      this.groupByCategory = "";
+      this.filterByCategory = "";
+      this.locationsList = this.$store.state.locations;
+    },
     groupByCat() {
-      this.locationsList = this.$store.state.locations; // reset the list
+      // this.locationsList = this.$store.state.locations; // reset the list
       const result = [];
       const groupy = [];
 
@@ -91,7 +100,8 @@ export default {
       }
 
       this.locationsList.forEach(item => {
-        if (isExist(item.category, this.groupByCategory)) {
+        console.log(item);
+        if (isExist(item.categoriesSelected, this.groupByCategory)) {
           groupy.push(item);
         }
         else {
@@ -102,7 +112,7 @@ export default {
       this.locationsList = groupy.concat(result);
     },
     filterByCat() {
-      this.locationsList = this.$store.state.locations; // reset the list
+      // this.locationsList = this.$store.state.locations; // reset the list
 
       function isExist(categoriesArray, groupByCategory) {
         for(let i=0; i<categoriesArray.length; i++) {
@@ -116,7 +126,7 @@ export default {
 
       const result = [];
       this.locationsList.forEach(item => {
-        if (isExist(item.category, this.filterByCategory)) {
+        if (isExist(item.categoriesSelected, this.filterByCategory)) {
           result.push(item);
         }
       })
